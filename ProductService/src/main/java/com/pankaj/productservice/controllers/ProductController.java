@@ -27,10 +27,16 @@ public class ProductController {
     }
 
     //localhost:8080/products
-    @GetMapping
+    @GetMapping("/")
     public List<ProductDto> getAllProducts(){
-        List<ProductDto> productDto = DtoConverter.convertProductToProductDto(productService.getAllProducts());
-        return productDto;
+        List<Product> productList = productService.getAllProducts();
+        List<ProductDto> productDtoResponse = new ArrayList<>();
+        if(productList != null && productList.size() > 0){
+            for (Product product : productList) {
+                productDtoResponse.add(DtoConverter.convertProductToProductDto(product));
+            }
+        }
+        return productDtoResponse;
     }
 
     //localhost:8080/products

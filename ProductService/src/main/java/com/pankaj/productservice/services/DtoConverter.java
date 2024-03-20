@@ -9,16 +9,16 @@ public class DtoConverter {
 
     public static  ProductDto convertProductToProductDto(Product product){
         ProductDto productDto = new ProductDto();
-        product.setId(product.getId());
-        product.setDescription(product.getDescription());
-        product.setCategory(product.getCategory());
-        product.setTitle(product.getTitle());
-        product.setPrice(product.getPrice());
-        product.setImage(product.getImage());
+        productDto.setId(product.getId());
+        productDto.setDescription(product.getDescription());
+        productDto.setCategory(product.getCategory().getDescription());
+        productDto.setTitle(product.getTitle());
+        productDto.setPrice(product.getPrice());
+        productDto.setImage(product.getImage());
         return productDto;
     }
 
-    public static  Product convertFakeProductDtoToProduct(FakeStoreProductDto fakeStoreProductDto){
+    public static Product convertFakeProductDtoToProduct(FakeStoreProductDto fakeStoreProductDto){
         Product product = new Product();
         product.setId(fakeStoreProductDto.getId());
         product.setDescription(fakeStoreProductDto.getDescription());

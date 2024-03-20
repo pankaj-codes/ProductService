@@ -2,10 +2,13 @@ package com.pankaj.productservice.services;
 
 import com.pankaj.productservice.models.Category;
 import com.pankaj.productservice.models.FakeStoreProductDto;
+import com.pankaj.productservice.models.FakeStoreProductDtoList;
 import com.pankaj.productservice.models.Product;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -28,8 +31,15 @@ public class FakeStoreProductService implements ProductService{
     @Override
     public List<Product> getAllProducts() {
         String url = urlCreator.getUrl(URLS.FAKESTORE, URLS.PRODUCTS.value);
-//        return DtoConverter.convertFakeProductDtoToProduct(restTemplate.getForObject(url, FakeStoreProductDto.class));
-        return null;
+
+         FakeStoreProductDto[] fakeStoreProductDtos = restTemplate.getForObject(url, FakeStoreProductDto[].class);
+
+        // FakeStoreProductDtoList fakeStoreProductDtosList = restTemplate.getForObject(url, FakeStoreProductDtoList.class);
+        List<Product> productList = new ArrayList<>();
+        for (FakeStoreProductDto fakeStoreProductDto : Arrays.stream(fakeStoreProductDtos).toList()) {
+            productList.add(DtoConverter.convertFakeProductDtoToProduct(fakeStoreProductDto));
+        }
+        return productList;
     }
 
     @Override

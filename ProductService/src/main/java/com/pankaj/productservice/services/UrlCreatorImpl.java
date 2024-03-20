@@ -6,6 +6,10 @@ import org.springframework.stereotype.Component;
 public class UrlCreatorImpl implements UrlCreator{
     @Override
     public String getUrl(URLS baseUrl, String... path) {
-        return null;
+        StringBuilder sb = new StringBuilder(baseUrl.getValue());
+        for (String pathVar : path) {
+            sb.append("/").append(pathVar);
+        }
+        return sb.toString();
     }
 }
