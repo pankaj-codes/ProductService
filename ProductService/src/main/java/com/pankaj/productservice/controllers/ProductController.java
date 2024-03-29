@@ -1,9 +1,11 @@
 package com.pankaj.productservice.controllers;
 
 import com.pankaj.productservice.models.Product;
-import com.pankaj.productservice.models.ProductDto;
-import com.pankaj.productservice.services.DtoConverter;
+import com.pankaj.productservice.dtos.ProductDto;
+import com.pankaj.productservice.helpers.DtoConverter;
 import com.pankaj.productservice.services.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,45 +23,63 @@ public class ProductController {
 
     //localhost:8080/products/10
     @GetMapping("/{id}")
-    public ProductDto getProductById(@PathVariable("id") Long id){
-       ProductDto productDto = DtoConverter.convertProductToProductDto(productService.getProductById(id));
-       return productDto;
+    public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Long id) {
+        ProductDto productDto = DtoConverter.convertProductToProductDto(productService.getProductById(id));
+        return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
     //localhost:8080/products
-    @GetMapping("/")
-    public List<ProductDto> getAllProducts(){
+    @GetMapping()
+    public ResponseEntity<List<ProductDto>> getAllProducts() {
         List<Product> productList = productService.getAllProducts();
-        List<ProductDto> productDtoResponse = new ArrayList<>();
-        if(productList != null && productList.size() > 0){
+        return new ResponseEntity<>(getProductDtos(productList), HttpStatus.OK);
+    }
+
+    @GetMapping("/v1")
+    public ResponseEntity<List<ProductDto>> getAllProductsV1() {
+        List<Product> productList = productService.getAllProductsV1();
+        return new ResponseEntity<>(getProductDtos(productList), HttpStatus.OK);
+    }
+
+    private List<ProductDto> getProductDtos(List<Product> productList) {
+        List<ProductDto> productDto = new ArrayList<>();
+        if (productList != null && productList.size() > 0) {
             for (Product product : productList) {
-                productDtoResponse.add(DtoConverter.convertProductToProductDto(product));
+                productDto.add(DtoConverter.convertProductToProductDto(product));
             }
         }
-        return productDtoResponse;
+        return productDto;
     }
 
     //localhost:8080/products
     @PostMapping
-    public ProductDto createProduct(@RequestBody Product product){
-        return new ProductDto();
+    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
+        Product prod = null;
+        if (productDto != null) {
+            prod = productService.createProduct(DtoConverter.convertProductDtoToProduct(productDto));
+        }
+        return new ResponseEntity<>(DtoConverter.convertProductToProductDto(prod), HttpStatus.CREATED);
     }
 
     //localhost:8080/products/10
     @PatchMapping("/{id}")
-    public ProductDto updateProduct(@PathVariable("id") Long id, @RequestBody Product product){
-        return new ProductDto();
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
+        Product productResponse = productService.updateProduct(id, product);
+        return new ResponseEntity<>(DtoConverter.convertProductToProductDto(productResponse), HttpStatus.OK);
     }
 
     //localhost:8080/products/10
     @PutMapping("/{id}")
-    public ProductDto replaceProduct(@PathVariable("id") Long id, @RequestBody Product product){
-        return new ProductDto();
+    public ResponseEntity<ProductDto> replaceProduct(@PathVariable("id") Long id, @RequestBody Product product) {
+
+        Product productResponse = productService.replaceProduct(id, product);
+        return new ResponseEntity<>(DtoConverter.convertProductToProductDto(productResponse), HttpStatus.OK);
     }
 
     //localhost:8080/products/10
     @DeleteMapping("/{id}")
-    public ProductDto deleteProduct(@PathVariable("id") Long id){
-        return new ProductDto();
+    public ResponseEntity<ProductDto> deleteProduct(@PathVariable("id") Long id) {
+        productService.deleteProduct(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -1,11 +1,11 @@
-package com.pankaj.productservice.models;
+package com.pankaj.productservice.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ProductDto {
+public class FakeStoreProductDto {
     private long id;
     private String title;
     private double price;
