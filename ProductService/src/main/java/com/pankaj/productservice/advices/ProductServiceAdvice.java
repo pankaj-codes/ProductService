@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.NoSuchElementException;
+
 @ControllerAdvice
 public class ProductServiceAdvice {
 
@@ -23,5 +25,11 @@ public class ProductServiceAdvice {
     public ResponseEntity<ExceptionDto> handleException() {
         ExceptionDto exceptionDto = new ExceptionDto("Exception occurred");
         return new ResponseEntity<>(exceptionDto, HttpStatusCode.valueOf(500));
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<ExceptionDto> handleNoSuchElementException(){
+        ExceptionDto exceptionDto = new ExceptionDto("No element exist to fetch.");
+                return new ResponseEntity<>(exceptionDto, HttpStatusCode.valueOf(500));
     }
 }

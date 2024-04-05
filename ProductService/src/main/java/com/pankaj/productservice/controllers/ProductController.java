@@ -35,11 +35,11 @@ public class ProductController {
         return new ResponseEntity<>(getProductDtos(productList), HttpStatus.OK);
     }
 
-    @GetMapping("/v1")
-    public ResponseEntity<List<ProductDto>> getAllProductsV1() {
-        List<Product> productList = productService.getAllProductsV1();
-        return new ResponseEntity<>(getProductDtos(productList), HttpStatus.OK);
-    }
+//    @GetMapping("/v1")
+//    public ResponseEntity<List<ProductDto>> getAllProductsV1() {
+//        List<Product> productList = productService.getAllProductsV1();
+//        return new ResponseEntity<>(getProductDtos(productList), HttpStatus.OK);
+//    }
 
     private List<ProductDto> getProductDtos(List<Product> productList) {
         List<ProductDto> productDto = new ArrayList<>();

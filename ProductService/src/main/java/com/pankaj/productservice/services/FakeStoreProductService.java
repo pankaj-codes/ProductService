@@ -44,22 +44,22 @@ public class FakeStoreProductService
         return productList;
     }
 
-    /**
-     * This is an incorrect way of implementation.
-     *
-     * @return
-     */
-    @Override
-    public List<Product> getAllProductsV1() {
-        String url = URLS.getUrl(URLS.FAKESTORE, URLS.PRODUCTS.getValue());
-        ResponseEntity<FakeStoreProductDtoWrapper> response =
-                restTemplate.getForEntity(url, FakeStoreProductDtoWrapper.class);
-        List<Product> productList = new ArrayList<>();
-        for (FakeStoreProductDto fakeStoreProductDto : response.getBody().getFakeStoreProductDtoList()) {
-            productList.add(DtoConverter.convertFakeProductDtoToProduct(fakeStoreProductDto));
-        }
-        return productList;
-    }
+//    /**
+//     * This is an incorrect way of implementation.
+//     *
+//     * @return
+//     */
+//    @Override
+//    public List<Product> getAllProductsV1() {
+//        String url = URLS.getUrl(URLS.FAKESTORE, URLS.PRODUCTS.getValue());
+//        ResponseEntity<FakeStoreProductDtoWrapper> response =
+//                restTemplate.getForEntity(url, FakeStoreProductDtoWrapper.class);
+//        List<Product> productList = new ArrayList<>();
+//        for (FakeStoreProductDto fakeStoreProductDto : response.getBody().getFakeStoreProductDtoList()) {
+//            productList.add(DtoConverter.convertFakeProductDtoToProduct(fakeStoreProductDto));
+//        }
+//        return productList;
+//    }
 
     @Override
     public Product createProduct(Product product) {
@@ -93,9 +93,8 @@ public class FakeStoreProductService
     }
 
     @Override
-    public Product deleteProduct(Long id) {
+    public void deleteProduct(Long id) {
         String url = URLS.getUrl(URLS.FAKESTORE, URLS.PRODUCTS.getValue(), id.toString());
         restTemplate.delete(url);
-        return null;
     }
 }

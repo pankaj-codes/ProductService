@@ -8,13 +8,18 @@ import com.pankaj.productservice.dtos.ProductDto;
 public class DtoConverter {
 
     public static ProductDto convertProductToProductDto(Product product) {
-        ProductDto productDto = new ProductDto();
-        productDto.setId(product.getId());
-        productDto.setDescription(product.getDescription());
-        productDto.setCategory(product.getCategory().getDescription());
-        productDto.setTitle(product.getTitle());
-        productDto.setPrice(product.getPrice());
-        productDto.setImage(product.getImage());
+        ProductDto productDto = null;
+        if(product != null){
+            productDto = new ProductDto();
+            if(product != null && !product.getId().equals(0)){
+                productDto.setId(product.getId());
+            }
+            productDto.setDescription(product.getDescription());
+            productDto.setCategory(product.getCategory().getDescription());
+            productDto.setTitle(product.getTitle());
+            productDto.setPrice(product.getPrice());
+            productDto.setImage(product.getImage());
+        }
         return productDto;
     }
 
@@ -23,7 +28,9 @@ public class DtoConverter {
         product.setDescription(productDto.getDescription());
         Category category = new Category(productDto.getDescription());
         product.setCategory(category);
-        product.setId(productDto.getId());
+        if(productDto.getId() != null && !productDto.getId().equals(0)){
+            product.setId(productDto.getId());
+        }
         product.setTitle(productDto.getTitle());
         product.setPrice(productDto.getPrice());
         product.setImage(productDto.getImage());
@@ -32,7 +39,9 @@ public class DtoConverter {
 
     public static Product convertFakeProductDtoToProduct(FakeStoreProductDto fakeStoreProductDto) {
         Product product = new Product();
-        product.setId(fakeStoreProductDto.getId());
+        if(fakeStoreProductDto != null && !fakeStoreProductDto.getId().equals(0)){
+            product.setId(fakeStoreProductDto.getId());
+        }
         product.setDescription(fakeStoreProductDto.getDescription());
         Category category = new Category();
         category.setDescription(fakeStoreProductDto.getCategory());
