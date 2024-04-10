@@ -9,7 +9,8 @@ import lombok.Setter;
 @Entity
 public class Product extends BaseModel{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.AUTO)//This will create a sequence table in DB
     private Long id;
     private String title;
     private Double price;

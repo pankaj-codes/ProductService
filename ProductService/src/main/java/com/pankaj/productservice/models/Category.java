@@ -14,7 +14,7 @@ import javax.management.ConstructorParameters;
 @Entity
 public class Category extends BaseModel{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
 
