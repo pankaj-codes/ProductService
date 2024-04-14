@@ -1,11 +1,11 @@
 CREATE TABLE category
 (
-    id            BIGINT AUTO_INCREMENT NOT NULL,
-    created_by    VARCHAR(255)          NULL,
-    created_at    datetime              NULL,
-    updated_by    VARCHAR(255)          NULL,
-    updated_at    datetime              NULL,
-    `description` VARCHAR(255)          NULL,
+    id         BIGINT AUTO_INCREMENT NOT NULL,
+    created_by VARCHAR(255)          NULL,
+    created_at datetime              NULL,
+    updated_by VARCHAR(255)          NULL,
+    updated_at datetime              NULL,
+    title      VARCHAR(255)          NULL,
     CONSTRAINT pk_category PRIMARY KEY (id)
 );
 

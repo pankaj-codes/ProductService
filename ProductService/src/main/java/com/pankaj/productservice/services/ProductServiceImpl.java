@@ -75,13 +75,13 @@ public class ProductServiceImpl implements ProductService {
             if (product.getDescription() != null) {
                 updatedProduct.setDescription(product.getDescription());
             }
-            if (product.getCategory() != null && product.getCategory().getDescription() != null) {
+            if (product.getCategory() != null && product.getCategory().getTitle() != null) {
                 Category category = null;
                 if (updatedProduct.getCategory() == null) {
-                    category = new Category(product.getCategory().getDescription());
+                    category = new Category(product.getCategory().getTitle(), null);
                     updatedProduct.setCategory(category);
                 } else {
-                    updatedProduct.getCategory().setDescription(product.getCategory().getDescription());
+                    updatedProduct.getCategory().setTitle(product.getCategory().getTitle());
                 }
             }
             if (product.getTitle() != null) {

@@ -15,7 +15,7 @@ public class DtoConverter {
                 productDto.setId(product.getId());
             }
             productDto.setDescription(product.getDescription());
-            productDto.setCategory(product.getCategory().getDescription());
+            productDto.setCategory(product.getCategory().getTitle());
             productDto.setTitle(product.getTitle());
             productDto.setPrice(product.getPrice());
             productDto.setImage(product.getImage());
@@ -26,7 +26,7 @@ public class DtoConverter {
     public static Product convertProductDtoToProduct(ProductDto productDto) throws NullPointerException {
         Product product = new Product();
         product.setDescription(productDto.getDescription());
-        Category category = new Category(productDto.getDescription());
+        Category category = new Category(productDto.getDescription(), null);
         product.setCategory(category);
         if(productDto.getId() != null && !productDto.getId().equals(0)){
             product.setId(productDto.getId());
@@ -44,7 +44,7 @@ public class DtoConverter {
         }
         product.setDescription(fakeStoreProductDto.getDescription());
         Category category = new Category();
-        category.setDescription(fakeStoreProductDto.getCategory());
+        category.setTitle(fakeStoreProductDto.getCategory());
         product.setCategory(category);
         product.setTitle(fakeStoreProductDto.getTitle());
         product.setPrice(fakeStoreProductDto.getPrice());
@@ -55,7 +55,7 @@ public class DtoConverter {
     public static FakeStoreProductDto convertProductToFakeProductDto(Product product) throws NullPointerException {
         FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
         fakeStoreProductDto.setDescription(product.getDescription());
-        fakeStoreProductDto.setCategory(product.getCategory().getDescription());
+        fakeStoreProductDto.setCategory(product.getCategory().getTitle());
         fakeStoreProductDto.setTitle(product.getTitle());
         fakeStoreProductDto.setPrice(product.getPrice());
         fakeStoreProductDto.setImage(product.getImage());

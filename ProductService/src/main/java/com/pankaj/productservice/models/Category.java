@@ -1,13 +1,10 @@
 package com.pankaj.productservice.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.management.ConstructorParameters;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,12 +13,15 @@ public class Category extends BaseModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String description;
+    private String title;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
+    private List<Product> products;
 
     public Category() {
     }
 
-    public Category(String description) {
-        this.description = description;
+    public Category(String title, List<Product> products) {
+        this.title = title;
+        this.products = products;
     }
 }
