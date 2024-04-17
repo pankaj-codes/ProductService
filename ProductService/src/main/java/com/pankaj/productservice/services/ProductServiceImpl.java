@@ -10,6 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+    /*
+    @Primary will pass this class' instance in the interface object during injection, For Eg when we use autowire how
+    the code will know which implementation of the interface we want to inject. Eg - Check @ProductController -->
+    productService.
+     */
 @Primary
 public class ProductServiceImpl implements ProductService {
 
@@ -35,11 +40,6 @@ public class ProductServiceImpl implements ProductService {
         }
         return dbProduct;
     }
-
-//    @Override
-//    public List<Product> getAllProductsV1() {
-//        return null;
-//    }
 
     @Override
     public List<Product> getAllProducts() {
