@@ -9,9 +9,9 @@ public class DtoConverter {
 
     public static ProductDto convertProductToProductDto(Product product) {
         ProductDto productDto = null;
-        if(product != null){
+        if (product != null) {
             productDto = new ProductDto();
-            if(product != null && !product.getId().equals(0)){
+            if (!product.getId().equals(0L)) {
                 productDto.setId(product.getId());
             }
             productDto.setDescription(product.getDescription());
@@ -28,7 +28,7 @@ public class DtoConverter {
         product.setDescription(productDto.getDescription());
         Category category = new Category(productDto.getDescription(), null);
         product.setCategory(category);
-        if(productDto.getId() != null && !productDto.getId().equals(0)){
+        if (productDto.getId() != null && !productDto.getId().equals(0)) {
             product.setId(productDto.getId());
         }
         product.setTitle(productDto.getTitle());
@@ -39,7 +39,7 @@ public class DtoConverter {
 
     public static Product convertFakeProductDtoToProduct(FakeStoreProductDto fakeStoreProductDto) {
         Product product = new Product();
-        if(fakeStoreProductDto != null && !fakeStoreProductDto.getId().equals(0)){
+        if (fakeStoreProductDto != null && !fakeStoreProductDto.getId().equals(0L)) {
             product.setId(fakeStoreProductDto.getId());
         }
         product.setDescription(fakeStoreProductDto.getDescription());
