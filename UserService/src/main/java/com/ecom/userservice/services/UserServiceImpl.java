@@ -3,9 +3,9 @@ package com.ecom.userservice.services;
 import com.ecom.userservice.exceptions.UserDetailsException;
 import com.ecom.userservice.models.Token;
 import com.ecom.userservice.models.User;
+import com.ecom.userservice.repositories.TokenRepository;
 import com.ecom.userservice.repositories.UserRepository;
 import org.springframework.context.annotation.Primary;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +15,15 @@ import java.util.Optional;
 @Primary
 public class UserServiceImpl implements UserService {
 
+    private final TokenRepository tokenRepository;
     UserRepository userRepository;
     PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                           TokenRepository tokenRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.tokenRepository = tokenRepository;
     }
 
     @Override
@@ -57,6 +60,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean logout(String token) {
+        Optional<Token> optionalToken = tokenRepository.findByValue(token);
+        if (optionalToken.isEmpty()) {
+            return null;
+        }
+        Token dbToken = optionalToken.get();
+//        Optional<Token> optionalToken = tokenRepository.findByValueAndIsDeleted(token, false);
         return null;
     }
 }

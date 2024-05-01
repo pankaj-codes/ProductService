@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserDto extends MessageDto {
+public class UserDto {
     String name;
     String email;
 }

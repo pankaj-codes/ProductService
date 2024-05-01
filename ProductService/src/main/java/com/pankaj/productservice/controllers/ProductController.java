@@ -1,5 +1,7 @@
 package com.pankaj.productservice.controllers;
 
+import com.pankaj.productservice.commons.AuthenticationCommons;
+import com.pankaj.productservice.dtos.UserDto;
 import com.pankaj.productservice.models.Product;
 import com.pankaj.productservice.dtos.ProductDto;
 import com.pankaj.productservice.helpers.DtoConverter;
@@ -15,10 +17,12 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
-    ProductService productService;
+    private final ProductService productService;
+    private final AuthenticationCommons authenticationCommons;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, AuthenticationCommons authenticationCommons) {
         this.productService = productService;
+        this.authenticationCommons = authenticationCommons;
     }
 
     //localhost:8080/products/10
@@ -31,6 +35,17 @@ public class ProductController {
     //localhost:8080/products
     @GetMapping()
     public ResponseEntity<List<ProductDto>> getAllProducts() {
+
+        String token = "";
+        //Validate the token using UserService.
+        UserDto userDto = authenticationCommons.validateToken(token);
+
+        if (userDto == null) {
+            //token is invalid
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+
         List<Product> productList = productService.getAllProducts();
         return new ResponseEntity<>(getProductDtos(productList), HttpStatus.OK);
     }

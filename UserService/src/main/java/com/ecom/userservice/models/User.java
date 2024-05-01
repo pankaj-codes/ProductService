@@ -10,11 +10,11 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class User extends BaseModel{
+public class User extends BaseModel {
     private String name;
     private String email;
     private String password;
     @ManyToMany
     private List<Role> roles;
-    private Boolean isEmailVerified = false;
+    private Boolean emailVerified = false;
 }
