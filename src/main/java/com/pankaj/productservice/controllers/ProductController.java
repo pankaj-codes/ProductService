@@ -36,14 +36,14 @@ public class ProductController {
     @GetMapping()
     public ResponseEntity<List<ProductDto>> getAllProducts() {
 
-        String token = "";
-        //Validate the token using UserService.
-        UserDto userDto = authenticationCommons.validateToken(token);
-
-        if (userDto == null) {
-            //token is invalid
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+//        String token = "";
+//        //Validate the token using UserService.
+//        UserDto userDto = authenticationCommons.validateToken(token);
+//
+//        if (userDto == null) {
+//            //token is invalid
+//            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//        }
 
 
         List<Product> productList = productService.getAllProducts();

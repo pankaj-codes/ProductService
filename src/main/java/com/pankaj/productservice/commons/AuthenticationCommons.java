@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class AuthenticationCommons {
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     public AuthenticationCommons(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
