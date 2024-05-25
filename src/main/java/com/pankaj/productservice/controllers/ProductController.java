@@ -6,6 +6,7 @@ import com.pankaj.productservice.models.Product;
 import com.pankaj.productservice.dtos.ProductDto;
 import com.pankaj.productservice.helpers.DtoConverter;
 import com.pankaj.productservice.services.ProductService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +35,10 @@ public class ProductController {
 
     //localhost:8080/products
     @GetMapping()
-    public ResponseEntity<List<ProductDto>> getAllProducts() {
-
+    public ResponseEntity<Page<ProductDto>> getAllProducts(@RequestParam("page") int pageNumber,
+                                                           @RequestParam("size") int pageSize,
+                                                           @RequestParam("sort") String sortDirection) {
+//          Manual Authorization
 //        String token = "";
 //        //Validate the token using UserService.
 //        UserDto userDto = authenticationCommons.validateToken(token);
@@ -46,8 +49,10 @@ public class ProductController {
 //        }
 
 
-        List<Product> productList = productService.getAllProducts();
-        return new ResponseEntity<>(getProductDtos(productList), HttpStatus.OK);
+        Page<Product> productList = productService.getAllProducts(pageNumber, pageSize, sortDirection);
+        Page<ProductDto> productDtoPage = productList.map(DtoConverter::convertProductToProductDto);
+
+        return new ResponseEntity<>(productDtoPage, HttpStatus.OK);
     }
 
     private List<ProductDto> getProductDtos(List<Product> productList) {

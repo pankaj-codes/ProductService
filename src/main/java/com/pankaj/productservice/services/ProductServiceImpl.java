@@ -4,6 +4,9 @@ import com.pankaj.productservice.models.Category;
 import com.pankaj.productservice.models.Product;
 import com.pankaj.productservice.repositories.ProductRepository;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -42,8 +45,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public Page<Product> getAllProducts(int pageNumber, int pageSize, String sortDirection) {
+        return productRepository.findAll(PageRequest.of(pageNumber, pageSize, sortDirection.equalsIgnoreCase("asc") ?
+                Sort.by("price").ascending() : Sort.by("price").descending()));
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.pankaj.productservice.helpers.DtoConverter;
 import com.pankaj.productservice.dtos.FakeStoreProductDto;
 import com.pankaj.productservice.dtos.FakeStoreProductDtoWrapper;
 import com.pankaj.productservice.models.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -32,7 +33,7 @@ public class FakeStoreProductService
     }
 
     @Override
-    public List<Product> getAllProducts() {
+    public Page<Product> getAllProducts(int pageNumber, int pageSize, String sortDirection) {
         String url = URLS.getUrl(URLS.FAKESTORE, URLS.PRODUCTS.getValue());
 
         FakeStoreProductDto[] fakeStoreProductDtos = restTemplate.getForObject(url, FakeStoreProductDto[].class);
@@ -41,7 +42,7 @@ public class FakeStoreProductService
         for (FakeStoreProductDto fakeStoreProductDto : Arrays.stream(fakeStoreProductDtos).toList()) {
             productList.add(DtoConverter.convertFakeProductDtoToProduct(fakeStoreProductDto));
         }
-        return productList;
+        return null;
     }
 
 //    /**

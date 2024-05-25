@@ -1,6 +1,7 @@
 package com.pankaj.productservice.services;
 
 import com.pankaj.productservice.models.Product;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ public interface ProductService {
     //localhost:8080/products/10
     public Product getProductById(Long id);
 
-    public List<Product> getAllProducts();
+    public Page<Product> getAllProducts(int pageNumber, int pageSize, String sortDirection);
 
 //  public List<Product> getAllProductsV1();
 
