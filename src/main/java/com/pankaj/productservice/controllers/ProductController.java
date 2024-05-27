@@ -1,7 +1,6 @@
 package com.pankaj.productservice.controllers;
 
 import com.pankaj.productservice.commons.AuthenticationCommons;
-import com.pankaj.productservice.dtos.UserDto;
 import com.pankaj.productservice.models.Product;
 import com.pankaj.productservice.dtos.ProductDto;
 import com.pankaj.productservice.helpers.DtoConverter;
@@ -10,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +20,12 @@ public class ProductController {
 
     private final ProductService productService;
     private final AuthenticationCommons authenticationCommons;
+    private final RestTemplate restTemplate;
 
-    public ProductController(ProductService productService, AuthenticationCommons authenticationCommons) {
+    public ProductController(ProductService productService, AuthenticationCommons authenticationCommons, RestTemplate restTemplate) {
         this.productService = productService;
         this.authenticationCommons = authenticationCommons;
+        this.restTemplate = restTemplate;
     }
 
     //localhost:8080/products/10
@@ -95,5 +97,15 @@ public class ProductController {
     public ResponseEntity<ProductDto> deleteProduct(@PathVariable("id") Long id) {
         productService.deleteProduct(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/eureka")
+    public ResponseEntity<String> eureka() {
+
+        // spring.application.name=UserService, instead of giving hard coded address, we will give name provided in
+        // application.properties of UserService
+        // ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:7020/users/eureka",
+        return restTemplate.getForEntity("http://UserService/users/eureka",
+                String.class);
     }
 }
