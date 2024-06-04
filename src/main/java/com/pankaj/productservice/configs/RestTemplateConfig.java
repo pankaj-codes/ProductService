@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class Config {
+public class RestTemplateConfig {
 
     @Bean
     @LoadBalanced//This will make restTemplate load balanced for eureka. Thi is a client side load balancing used for

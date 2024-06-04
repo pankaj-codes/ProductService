@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,9 +23,11 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     ProductRepository productRepository;
+    RedisTemplate<String, Object> redisTemplate;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, RedisTemplate redisTemplate) {
         this.productRepository = productRepository;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
@@ -38,8 +41,17 @@ public class ProductServiceImpl implements ProductService {
     public Product getProductById(Long id) {
         Product dbProduct = null;
         if (id != null && id > 0) {
+            dbProduct = (Product) redisTemplate.opsForHash().get("PRODUCTS", "PRODUCT_" + id);
+            if (dbProduct != null) {
+                System.out.println("Cache hit for product " + id);
+                return dbProduct;
+            }
+            System.out.println("Cache miss for product " + id);
             Optional<Product> optionalProduct = productRepository.findById(id);
-            dbProduct = optionalProduct.get();
+            if (optionalProduct.isPresent()) {
+                dbProduct = optionalProduct.get();
+                redisTemplate.opsForHash().put("PRODUCTS", "PRODUCT_" + id, dbProduct);
+            }
         }
         return dbProduct;
     }

@@ -36,6 +36,6 @@ public class SecurityConfig {
 
     @Bean
     public JwtDecoder getJwtDecoder() {
-        return NimbusJwtDecoder.withJwkSetUri("http://localhost:7020/oauth2/jwks").build();
+        return NimbusJwtDecoder.withJwkSetUri("http://localhost:" + 6010 + "/oauth2/jwks").build();
     }
 }
